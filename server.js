@@ -93,6 +93,8 @@ io.on("connection", function(socket){
    */
   socket.on("newUser", function(data) {
     participants.push({id: data.id, name: data.name});
+      console.log("newConnection")
+      console.log(participants)
     io.sockets.emit("newConnection", {participants: participants});
   });
 
@@ -103,6 +105,8 @@ io.on("connection", function(socket){
    */
   socket.on("nameChange", function(data) {
     _.findWhere(participants, {id: socket.id}).name = data.name;
+      console.log("nameChange")
+      console.log(participants)
     io.sockets.emit("nameChanged", {id: data.id, name: data.name});
   });
 
@@ -113,6 +117,8 @@ io.on("connection", function(socket){
    */
   socket.on("disconnect", function() {
     participants = _.without(participants,_.findWhere(participants, {id: socket.id}));
+      console.log("disconnect")
+      console.log(participants)
     io.sockets.emit("userDisconnected", {id: socket.id, sender:"system"});
   });
 
